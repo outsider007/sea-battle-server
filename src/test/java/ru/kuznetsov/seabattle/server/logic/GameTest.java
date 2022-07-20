@@ -10,6 +10,6 @@ public class GameTest {
 
     @Test
     public void isGameOver() {
-        assertTrue("Is not win points combination", Game.isGameOver(Arrays.asList(1,3,5,7)));
+        assertTrue("Is not win points combination", Game.isGameOver(Arrays.asList(1, 3, 5, 7)));
     }
 }

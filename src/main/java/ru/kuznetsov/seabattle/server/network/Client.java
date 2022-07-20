@@ -1,6 +1,8 @@
 package ru.kuznetsov.seabattle.server.network;
 
+import lombok.SneakyThrows;
 import ru.kuznetsov.seabattle.server.logic.Player;
+import ru.kuznetsov.seabattle.server.util.Action;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,13 +14,15 @@ public class Client implements Player {
     private final Socket socket;
     private final PrintWriter outputStream;
     private final BufferedReader inputStream;
-    private String name;
+    private final String name;
 
     public Client(Socket socket) {
         this.socket = socket;
         try {
             outputStream = new PrintWriter(socket.getOutputStream(), true);
             inputStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            sendContent(Action.NAME.command());
+            name = receiveContent();
         } catch (IOException e) {
             throw new IllegalStateException(e);
         }
@@ -55,23 +59,26 @@ public class Client implements Player {
         }
     }
 
+    @SneakyThrows
     @Override
     public String name() {
         return name;
     }
 
+    @SneakyThrows
     @Override
     public int selectPoint() {
-        return 0;
+        sendMessage(Action.NEXT_POINT.command());
+        return Integer.parseInt(receiveContent());
     }
 
     @Override
     public void sendMessage(String message) {
-
+        sendContent(message);
     }
 
     @Override
     public void sendCongratulations(String message) {
-
+        sendContent(message);
     }
 }

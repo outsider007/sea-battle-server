@@ -19,7 +19,6 @@ public class ConsolePlayer implements Player {
     @Override
     public int selectPoint() {
         Scanner scanner = new Scanner(System.in);
-        int selectedPoint;
         int attempt = 0;
 
         while (true) {
@@ -29,8 +28,7 @@ public class ConsolePlayer implements Player {
             System.out.print(name + ", input point: ");
             String input = scanner.next();
             try {
-                selectedPoint = Integer.parseInt(input);
-                return selectedPoint;
+                return Integer.parseInt(input);
             } catch (NumberFormatException ignore) {
             }
         }
